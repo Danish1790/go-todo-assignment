@@ -46,11 +46,17 @@ jobs:
           git clone https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/Danish1790/golang-manifest.git
           cd golang-manifest
 
-          # Replace image tag with current build number
-          sed -i 's|image: .*$|image: '"${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:build-${{ github.run_number }}"'|' golangSvc.yml
+          # Update the image tag
+          sed -i 's|image: .*$|image: danishasif/go-todo-assignment:build-4|' golangSvc.yml
 
           git config user.name "danish1790"
           git config user.email "danish.asif.7190@gmail.com"
+
           git add golangSvc.yml
-          git commit -m "Update image tag to build-${{ github.run_number }}"
+          git commit -m "Update image tag to build-4"
+
+          # Set remote to authenticated URL for push
+          git remote set-url origin https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/Danish1790/golang-manifest.git
+
           git push origin main
+      
