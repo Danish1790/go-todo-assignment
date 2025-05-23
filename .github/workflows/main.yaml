@@ -58,5 +58,19 @@ jobs:
           git remote set-url origin https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/Danish1790/golang-manifest.git
           git push origin main
 
+      - name: SSH, Pull & Run Container
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_SSH_KEY }}
+          script: |
+            sudo su
+            cd ~/golang-manifest
+            echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ vars.DOCKER_USERNAME }}" --password-stdin
+            docker pull danishasif/go-todo-assignment:build-${{ github.run_number }}
+            kubectl apply -f golangSvc.yml
+
+
 
       
