@@ -69,6 +69,7 @@ jobs:
           script: |
             sudo su
             cd ~/golang-manifest
+            git pull origin main
             echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ vars.DOCKER_USERNAME }}" --password-stdin
             docker pull danishasif/go-todo-assignment:build-${{ github.run_number }}
             kubectl apply -f golangSvc.yml
