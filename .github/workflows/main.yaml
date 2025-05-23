@@ -49,8 +49,8 @@ jobs:
           # Replace image tag with current build number
           sed -i 's|image: .*$|image: '"${{ vars.DOCKER_USERNAME }}/${{ github.event.repository.name }}:build-${{ github.run_number }}"'|' golangSvc.yml
 
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config user.name "danish1790"
+          git config user.email "danish.asif.7190@gmail.com"
           git add golangSvc.yml
           git commit -m "Update image tag to build-${{ github.run_number }}"
           git push origin main
