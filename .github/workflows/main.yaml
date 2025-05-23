@@ -44,6 +44,7 @@ jobs:
       - name: Clone and update manifest repo
         run: |
           pwd
+          ls
           rm -rf golang-manifest
           git clone https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/Danish1790/golang-manifest.git
           cd golang-manifest
