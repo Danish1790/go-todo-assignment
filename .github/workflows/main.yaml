@@ -43,20 +43,20 @@ jobs:
 
       - name: Clone and update manifest repo
         run: |
+          rm -rf golang-manifest
           git clone https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/Danish1790/golang-manifest.git
           cd golang-manifest
 
-          # Update the image tag
-          sed -i 's|image: .*$|image: danishasif/go-todo-assignment:build-4|' golangSvc.yml
+          BUILD_TAG="build-${{ github.run_number }}"
+          sed -i "s|image: .*$|image: danishasif/go-todo-assignment:${BUILD_TAG}|" golangSvc.yml
 
           git config user.name "danish1790"
           git config user.email "danish.asif.7190@gmail.com"
 
           git add golangSvc.yml
-          git commit -m "Update image tag to build-4"
-
-          # Set remote to authenticated URL for push
+          git commit -m "Update image tag to ${BUILD_TAG}"
           git remote set-url origin https://x-access-token:${{ secrets.GIT_PUSH_TOKEN }}@github.com/Danish1790/golang-manifest.git
-
           git push origin main
+
+
       
